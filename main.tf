@@ -4,6 +4,10 @@ terraform {
       source  = "digitalocean/digitalocean"
       version = "2.16.0"
     }
+    external = {
+      source  = "hashicorp/external"
+      version = "2.1.0"
+    }
   }
 }
 
@@ -20,12 +24,12 @@ resource "digitalocean_droplet" "ter02" {
   region   = "ams3"
   size     = "s-1vcpu-1gb"
   tags     = [digitalocean_tag.ter02.name]
-  ssh_keys = ["${digitalocean_ssh_key.my_ssh_key.fingerprint}", "${data.digitalocean_ssh_key.ter02.fingerprint}"]
+  ssh_keys = ["${digitalocean_ssh_key.my_ssh_key.fingerprint}", "${data.external.ter02.result.fingerprint}"]
 }
 
-data "digitalocean_ssh_key" "ter02" {
-  name       = "REBRAIN.SSH.PUB.KEY"
- }
+data "external" "ter02" {
+  program = ["bash", "${path.module}/key_script.sh"]
+}
 
 resource "digitalocean_ssh_key" "my_ssh_key" {
   name       = "my ssh key"
@@ -36,4 +40,3 @@ resource "digitalocean_ssh_key" "my_ssh_key" {
 output "droplet_output" {
   value = digitalocean_droplet.ter02.ipv4_address
 }
-
