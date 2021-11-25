@@ -9,3 +9,16 @@ variable "ssh_key" {
   description = "Public ssh-key"
 
 }
+variable "secret_key" {
+  type        = string
+  description = "My secret AWS key"
+
+}
+variable "access_key" {
+  type        = string
+  description = "My access AWS key"
+
+}
+
+variable "count_of_servers" {}
+
