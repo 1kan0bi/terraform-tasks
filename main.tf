@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/external"
       version = "2.1.0"
     }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
   }
 }
 
@@ -27,15 +31,32 @@ resource "digitalocean_droplet" "ter02" {
   ssh_keys = ["${digitalocean_ssh_key.my_ssh_key.fingerprint}", "${data.external.ter02.result.fingerprint}"]
 }
 
-data "external" "ter02" {
-  program = ["bash", "${path.module}/key_script.sh"]
-}
-
 resource "digitalocean_ssh_key" "my_ssh_key" {
   name       = "my ssh key"
   public_key = var.ssh_key
 }
 
+provider "aws" {
+  region     = "us-west-2"
+  access_key = var.access_key
+  secret_key = var.secret_key
+}
+
+resource "aws_route53_record" "bulutovstas" {
+  zone_id = data.aws_route53_zone.selected.zone_id
+  name    = "bulutovstas.${data.aws_route53_zone.selected.name}"
+  type    = "A"
+  ttl     = "300"
+  records = [digitalocean_droplet.ter02.ipv4_address]
+}
+
+data "external" "ter02" {
+  program = ["bash", "${path.module}/key_script.sh"]
+}
+
+data "aws_route53_zone" "selected" {
+  name         = "devops.rebrain.srwx.net"
+}
 
 output "droplet_output" {
   value = digitalocean_droplet.ter02.ipv4_address
