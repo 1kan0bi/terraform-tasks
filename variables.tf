@@ -20,5 +20,8 @@ variable "access_key" {
 
 }
 
-variable "count_of_servers" {}
+variable "count_of_servers" {
+ type = number
+ description = "Count of created servers"
+}
 
