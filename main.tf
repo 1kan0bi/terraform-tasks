@@ -4,10 +4,6 @@ terraform {
       source  = "digitalocean/digitalocean"
       version = "2.16.0"
     }
-    external = {
-      source  = "hashicorp/external"
-      version = "2.1.0"
-    }
     aws = {
       source  = "hashicorp/aws"
       version = "~> 3.0"
@@ -28,7 +24,7 @@ resource "digitalocean_droplet" "ter02" {
   region   = "ams3"
   size     = "s-1vcpu-1gb"
   tags     = [digitalocean_tag.ter02.name]
-  ssh_keys = ["${digitalocean_ssh_key.my_ssh_key.fingerprint}", "${data.external.ter02.result.fingerprint}"]
+  ssh_keys = ["${digitalocean_ssh_key.my_ssh_key.fingerprint}", "${data.digitalocean_ssh_key.rebrain_key.fingerprint}"]
 }
 
 resource "digitalocean_ssh_key" "my_ssh_key" {
@@ -47,17 +43,21 @@ resource "aws_route53_record" "bulutovstas" {
   name    = "bulutovstas.${data.aws_route53_zone.selected.name}"
   type    = "A"
   ttl     = "300"
-  records = [digitalocean_droplet.ter02.ipv4_address]
+  records = [local.ip_addr]
 }
 
-data "external" "ter02" {
-  program = ["bash", "${path.module}/key_script.sh"]
+data "digitalocean_ssh_key" "rebrain_key" {
+  name = "REBRAIN.SSH.PUB.KEY"
+}
+
+locals {
+  ip_addr = digitalocean_droplet.ter02.ipv4_address
 }
 
 data "aws_route53_zone" "selected" {
-  name         = "devops.rebrain.srwx.net"
+  name = "devops.rebrain.srwx.net"
 }
 
 output "droplet_output" {
-  value = digitalocean_droplet.ter02.ipv4_address
+  value = local.ip_addr
 }
