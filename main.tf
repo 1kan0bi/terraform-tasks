@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 3.0"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "3.1.0"
+    }
   }
 }
 
@@ -17,6 +21,11 @@ provider "digitalocean" {
 
 resource "digitalocean_tag" "ter02" {
   name = "bulutovstas_at_mail_ru"
+}
+
+resource "random_string" "random" {
+  count  = var.count_of_servers
+  length = 16
 }
 
 resource "digitalocean_droplet" "ter02" {
@@ -30,7 +39,7 @@ resource "digitalocean_droplet" "ter02" {
 
   provisioner "remote-exec" {
     inline = [
-      "echo root:Password123 | chpasswd"
+      "echo root:${random_string.random[count.index].result} | chpasswd"
     ]
 
     connection {
@@ -76,4 +85,8 @@ output "droplet_output" {
 
 output "aws_output" {
   value = aws_route53_record.domain.*
+}
+
+output "password_output" {
+value = random_string.random.*.result
 }
