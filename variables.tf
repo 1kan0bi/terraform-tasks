@@ -5,7 +5,7 @@ variable "do_token" {
 
 variable "ssh_key" {
   type        = string
-  default     = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBVki2X88HDd+iq3LZIdt4RN4xYfOhOJxYgV/7KtI/p5"
+  default     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3bzMRba74RNonnt79crON4QegCbwGXheaUtR0L0jCPf3+Ge4URvyT+KuJci3f6XwijCfOU5tAxcX81v6HHKum6DLt8d0afbKqMWC4NmNZJKO1sMLVSzgF/9FXd72iCq5qEmTG6Fy9OY09jlZf6PUc/hcVKeEN00m4c6qHrUL5BAQe90U5/cRrGkbaOHIOXhri3XvOIEzoCBezsLGDutvaLtxHRQV5POk4zkc/N1WKCu04Jz+TzVLtOTyReShYp5IdAjrKV0YTewOSxLydRvMoxs3XbJ3R+FHW/2gvMN0jK5rHCRjqwJT6mZXGSbcJjvv95SfnA+tNijAn7IG+hDQiTOfoMSwB+uTiLCjP/TaIcnBdESFMfGB/aob6zaYGjJxDDHZ/+8HCa/KJ015cRpjQh/0fHHyxB+OhRNbZBCHuIQQyJF0z/BE8gXa+/mtZ3rgSZlRQOMWKw+Iv3gboVLmvM8OaGtBmPJ9qyVvipBSX2dQowUDH1mViAc4uzohuHx0= kanobi@LAPTOP-8LVA9EO9"
   description = "Public ssh-key"
 
 }
@@ -21,7 +21,7 @@ variable "access_key" {
 }
 
 variable "count_of_servers" {
- type = number
- description = "Count of created servers"
+  type        = number
+  description = "Count of created servers"
 }
 

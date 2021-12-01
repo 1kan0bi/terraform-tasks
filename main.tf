@@ -27,6 +27,19 @@ resource "digitalocean_droplet" "ter02" {
   size     = "s-1vcpu-1gb"
   tags     = [digitalocean_tag.ter02.name]
   ssh_keys = ["${digitalocean_ssh_key.my_ssh_key.fingerprint}", "${data.digitalocean_ssh_key.rebrain_key.fingerprint}"]
+
+  provisioner "remote-exec" {
+    inline = [
+      "echo root:Password123 | chpasswd"
+    ]
+
+    connection {
+      type        = "ssh"
+      user        = "root"
+      host        = self.ipv4_address
+      private_key = file("~/.ssh/id_rsa_DO_keys/id_rsa_DO")
+    }
+  }
 }
 
 resource "digitalocean_ssh_key" "my_ssh_key" {
