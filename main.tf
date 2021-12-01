@@ -39,6 +39,8 @@ resource "digitalocean_droplet" "ter02" {
 
   provisioner "remote-exec" {
     inline = [
+      "sleep 30",
+      "sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config",
       "echo root:${random_string.random[count.index].result} | chpasswd"
     ]
 
@@ -88,5 +90,5 @@ output "aws_output" {
 }
 
 output "password_output" {
-value = random_string.random.*.result
+  value = random_string.random.*.result
 }
