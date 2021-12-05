@@ -38,7 +38,7 @@ resource "digitalocean_droplet" "ter02" {
     connection {
       type        = "ssh"
       user        = "root"
-     private_key = file("~/.ssh/id_rsa_DO_keys/id_rsa_DO")
+      private_key = file("~/.ssh/id_rsa_DO_keys/id_rsa_DO")
       host        = self.ipv4_address
          }
   }
