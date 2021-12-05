@@ -31,16 +31,16 @@ resource "digitalocean_droplet" "ter02" {
   provisioner "remote-exec" {
     inline = [
       "sleep 30",
-      "sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config",      
+      "sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config",
       "echo root:Password123 | chpasswd"
     ]
 
     connection {
       type        = "ssh"
       user        = "root"
-      private_key = file("~/.ssh/id_rsa_DO_keys/id_rsa_DO")
+      private_key = file(var.private_ssh_key)
       host        = self.ipv4_address
-         }
+    }
   }
 }
 
