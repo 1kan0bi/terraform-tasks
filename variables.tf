@@ -25,3 +25,8 @@ variable "count_of_servers" {
   description = "Count of created servers"
 }
 
+
+variable "devs" {
+  type    = list
+    
+}
