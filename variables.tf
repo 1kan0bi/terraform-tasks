@@ -25,3 +25,8 @@ variable "count_of_servers" {
   description = "Count of created servers"
 }
 
+variable "private_ssh_key" {
+type = string
+description = "Private SSH key for execute commands"
+
+}
