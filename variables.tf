@@ -27,6 +27,7 @@ variable "count_of_servers" {
 
 
 variable "devs" {
-  type    = list
-    
+  type    = list(map(string))
+  description = "Description of servers"    
+
 }

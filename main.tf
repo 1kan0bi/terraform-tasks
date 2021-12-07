@@ -67,7 +67,7 @@ provider "aws" {
 resource "aws_route53_record" "domain" {
   count   = var.count_of_servers
   zone_id = data.aws_route53_zone.selected.zone_id
-  name    = "bulutovstas-${format("%02d", count.index + 1)}.${data.aws_route53_zone.selected.name}"
+  name    = "${var.devs[1]}-${var.devs[0]}.${data.aws_route53_zone.selected.name}"
   type    = "A"
   ttl     = "300"
   records = ["${element(digitalocean_droplet.ter02.*.ipv4_address, count.index)}"]
