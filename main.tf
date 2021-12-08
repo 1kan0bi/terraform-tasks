@@ -131,7 +131,3 @@ output "aws_output" {
 output "password_output" {
   value = random_string.random.*.result
 }
-
-output "template" {
-  value = data.template_file.my_machines.*.rendered
-}
