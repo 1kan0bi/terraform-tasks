@@ -20,13 +20,13 @@ variable "access_key" {
 
 }
 
-variable "count_of_servers" {
-  type        = number
-  description = "Count of created servers"
-}
-
-
 variable "devs" {
-  type    = list
-    
+  type    = list(map(string))
+  default = [{ login = "bulutovstas", prefix = "mail" }, { login = "bulutovstas", prefix = "prod" }]
 }
+
+variable "private_ssh_key" {
+type = string
+description = "Private SSH key for execute commands"
+}
+

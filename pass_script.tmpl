@@ -1,0 +1,5 @@
+#!/bin/bash
+sleep 30
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+echo root:'${machine_pass}' | chpasswd
+mkdir /root/zaebalo
