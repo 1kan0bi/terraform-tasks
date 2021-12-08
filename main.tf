@@ -59,7 +59,7 @@ script = "${path.module}/script-${count.index}.sh"
     type        = "ssh"
     user        = "root"
     host        = self.ipv4_address
-    private_key = file("~/.ssh/id_rsa_DO_keys/id_rsa_DO")
+    private_key = file(var.private_ssh_key)
     script_path = "/root/script.sh"
   }
 }
